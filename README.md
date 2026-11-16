@@ -9,7 +9,7 @@
 需要 Python 3.11 以上及網路下載套件。建議 Python 3.12。
 
 ```bash
-git clone <本 repo 網址> taipei-shelter
+git clone https://github.com/cloud-driver/taipei-shelter.git
 cd taipei-shelter
 ./start.sh
 ```
