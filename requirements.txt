@@ -1,0 +1,6 @@
+fastapi==0.136.1
+uvicorn==0.46.0
+pydantic==2.13.4
+Pillow==12.3.0
+starlette==1.0.0
+anyio==4.13.0

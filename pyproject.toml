@@ -1,0 +1,40 @@
+[project]
+name = "taipei-shelter"
+version = "2.0.0"
+description = "安行 ANXING：臺北官方避難名冊、OSM 步行導航與震後避難分流演練原型"
+readme = "README.md"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+extend-exclude = ["static/vendor"]
+
+[tool.ruff.format]
+# The code base already uses single quotes; keep them to avoid noisy diffs.
+quote-style = "single"
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "F",   # pyflakes
+    "W",   # pycodestyle warnings
+    "I",   # import sorting
+    "B",   # bugbear: likely bugs
+    "UP",  # pyupgrade
+    "SIM", # simplifications
+]
+ignore = [
+    "E501",   # long Chinese user-facing messages are kept on one line on purpose
+    "B008",   # FastAPI uses Depends()/Header() in argument defaults
+    "SIM102", # nested ifs are kept where each guard has its own comment
+    "SIM103", # explicit `return False` chains read better for constraint checks
+    "SIM108", # ternaries are not always clearer
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["app"]

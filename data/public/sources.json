@@ -1,0 +1,238 @@
+{
+  "snapshot_at": "2026-10-21T07:58:51.257266+00:00",
+  "version": "taipei-public-2026-10-21",
+  "sources": {
+    "education": {
+      "title": "臺北市可供避難收容處所一覽表",
+      "agency": "臺北市教育局",
+      "page": "https://data.taipei/dataset/detail?id=aaf97773-3631-40e2-b3cc-da87bf2ce1d5",
+      "url": "https://data.taipei/api/frontstage/tpeod/dataset/resource.download?rid=4c92dbd4-d259-495a-8390-52628119a4dd",
+      "published_version": "2026-09-14",
+      "license": "政府資料開放授權條款第1版",
+      "sha256": "b938c6d43beffb1041ac6ad80de95ae412d8fa6e44029cd273da9fa3a8be299f",
+      "bytes": 88568,
+      "downloaded_at": "2026-10-21T07:09:37.123699+00:00"
+    },
+    "nfa": {
+      "title": "避難收容處所點位檔",
+      "agency": "內政部消防署",
+      "page": "https://data.gov.tw/dataset/73242",
+      "url": "https://opdadm.moi.gov.tw/api/v1/no-auth/resource/api/dataset/ED6CF735-6C03-4573-A882-72C1BEC799CB/resource/54550E2F-4567-4C8F-BD2E-E54E9D0386B8/download",
+      "published_version": "來源檔未提供觀測日期；另記下載時間",
+      "license": "政府資料開放授權條款第1版",
+      "sha256": "45f9e2039a7fc599f36bd65edb5b05b2ee222619f6e642c9d102e5cd6ca55e70",
+      "bytes": 1088666,
+      "downloaded_at": "2026-10-21T07:10:15.076939+00:00"
+    },
+    "parks": {
+      "title": "臺北市防災公園",
+      "agency": "臺北市工務局公園處",
+      "page": "https://data.taipei/dataset/detail?id=5800ed81-4aa8-48c9-ae6b-e1e23a91a695",
+      "url": "https://parks.gov.taipei/parks/json/",
+      "published_version": "資料平臺詮釋更新2026-07-22；API未提供逐筆日期",
+      "license": "政府資料開放授權條款第1版",
+      "sha256": "5d6d902cd4212bbdbf206b1980fa757ce514806c649bf2e71d871a650436ff98",
+      "bytes": 7996,
+      "downloaded_at": "2026-10-21T07:11:13.400870+00:00"
+    },
+    "airraid": {
+      "title": "115年臺北市防空疏散避難設施資料集",
+      "agency": "臺北市警察局",
+      "page": "https://data.taipei/dataset/detail?id=70a6216e-3730-4d1d-b334-62fca2dd71cd",
+      "url": "https://data.taipei/api/frontstage/tpeod/dataset/resource.download?rid=3bd658e7-8e8a-446b-8df5-89b2b896ff97",
+      "published_version": "2026-09清冊，2026-10-06上架",
+      "license": "政府資料開放授權條款第1版",
+      "sha256": "94efa2916eccd07e16e6f60b5d6c4f3b6681a5a5b359bfe9202b31daa5675aae",
+      "bytes": 2976015,
+      "downloaded_at": "2026-10-21T07:15:19.836274+00:00"
+    },
+    "osm": {
+      "title": "OpenStreetMap 臺北與鄰區步行路網",
+      "agency": "OpenStreetMap contributors",
+      "page": "https://www.openstreetmap.org/copyright",
+      "url": "https://overpass.private.coffee/api/interpreter",
+      "published_version": "見路網快照timestamp",
+      "license": "ODbL 1.0"
+    }
+  },
+  "raw_counts": {
+    "education_rows": 419,
+    "national_taipei_rows": 272,
+    "parks": 13,
+    "airraid_rows": 22443
+  },
+  "catalog_count": 22875,
+  "kind_counts": {
+    "airraid": 22443,
+    "shelter": 419,
+    "park": 13
+  },
+  "earthquake_records": 321,
+  "located_earthquake_records": 290,
+  "closed_earthquake_records": 6,
+  "unlocated_count": 81,
+  "coordinate_sources": {
+    "airraid": 22518,
+    "nfa": 250,
+    "unlocated": 81,
+    "osm": 12,
+    "parks": 14
+  },
+  "osm": {
+    "timestamp": "2026-07-15T15:22:01Z",
+    "license": "ODbL-1.0",
+    "attribution": "© OpenStreetMap contributors",
+    "bounds": [
+      121.44,
+      24.94,
+      121.69,
+      25.23
+    ],
+    "source": "https://overpass.private.coffee/api/interpreter",
+    "status": "ready",
+    "node_count": 161478,
+    "edge_count": 221520
+  },
+  "accessibility": {
+    "observations": 73,
+    "matched_catalog_records": 13,
+    "ratings": {
+      "yes": 53,
+      "limited": 5,
+      "no": 15
+    },
+    "catalog_ratings": {
+      "unknown": 419,
+      "yes": 10,
+      "limited": 2,
+      "no": 1
+    },
+    "timestamp": "2026-07-15T15:22:01Z",
+    "scope": "路網與學校快照內已存在的具名OSM設施，不是完整Wheelmap資料",
+    "source": "OpenStreetMap contributors；使用Wheelmap相同評級標籤，未使用Wheelmap專屬／合作夥伴資料",
+    "license": "ODbL-1.0",
+    "reference": "https://news.wheelmap.org/en/FAQ/",
+    "wheelmap_url": "https://wheelmap.org/"
+  },
+  "issues": [
+    {
+      "source": "nfa",
+      "name": "北市大附小",
+      "reason": "座標不在臺北及緩衝範圍；未使用"
+    },
+    {
+      "source": "nfa",
+      "name": "士東國小",
+      "reason": "座標不在臺北及緩衝範圍；未使用"
+    },
+    {
+      "source": "education",
+      "id": "SA100-0027",
+      "name": "國立臺北商業大學",
+      "reason": "同地址座標分歧超過約100m，改列待核對"
+    },
+    {
+      "source": "education",
+      "id": "SA103-0006",
+      "name": "臺北市大同運動中心",
+      "reason": "同地址座標分歧超過約100m，改列待核對"
+    },
+    {
+      "source": "education",
+      "id": "SA103-0007",
+      "name": "臺北市大同區大同國民小學(暫停用)",
+      "reason": "同地址座標分歧超過約100m，改列待核對"
+    },
+    {
+      "source": "education",
+      "id": "SA104-0052",
+      "name": "大同大學",
+      "reason": "同地址座標分歧超過約100m，改列待核對"
+    },
+    {
+      "source": "education",
+      "id": "SA106-0033",
+      "name": "國立臺北教育大學",
+      "reason": "同地址座標分歧超過約100m，改列待核對"
+    },
+    {
+      "source": "education",
+      "id": "SA106-0035",
+      "name": "國立臺北科技大學",
+      "reason": "同地址座標分歧超過約100m，改列待核對"
+    },
+    {
+      "source": "education",
+      "id": "SA106-0037",
+      "name": "國立臺灣大學",
+      "reason": "同地址座標分歧超過約100m，改列待核對"
+    },
+    {
+      "source": "education",
+      "id": "SA108-0004",
+      "name": "青年公園",
+      "reason": "同地址座標分歧超過約100m，改列待核對"
+    },
+    {
+      "source": "education",
+      "id": "SA108-0006",
+      "name": "青年公園棒球場",
+      "reason": "同地址座標分歧超過約100m，改列待核對"
+    },
+    {
+      "source": "education",
+      "id": "SA108-0011",
+      "name": "臺北市萬華區西園國民小學",
+      "reason": "同地址座標分歧超過約100m，改列待核對"
+    },
+    {
+      "source": "education",
+      "id": "SA111-0012",
+      "name": "臺北市士林區士東國民小學",
+      "reason": "同地址座標分歧超過約100m，改列待核對"
+    },
+    {
+      "source": "education",
+      "id": "SA111-0046",
+      "name": "銘傳大學",
+      "reason": "同地址座標分歧超過約100m，改列待核對"
+    },
+    {
+      "source": "education",
+      "id": "SA112-0013",
+      "name": "臺北市北投區石牌國民小學(暫停用)",
+      "reason": "同地址座標分歧超過約100m，改列待核對"
+    },
+    {
+      "source": "education",
+      "id": "SA112-0041",
+      "name": "國立陽明交通大學",
+      "reason": "同地址座標分歧超過約100m，改列待核對"
+    },
+    {
+      "source": "education",
+      "id": "SA115-0014",
+      "name": "臺北市立誠正國民中學",
+      "reason": "同地址座標分歧超過約100m，改列待核對"
+    },
+    {
+      "source": "education",
+      "id": "SA116-0056",
+      "name": "國立政治大學",
+      "reason": "同地址座標分歧超過約100m，改列待核對"
+    },
+    {
+      "source": "education",
+      "id": "SA116-0057",
+      "name": "世新大學",
+      "reason": "同地址座標分歧超過約100m，改列待核對"
+    }
+  ],
+  "notes": [
+    "筆數是名冊紀錄，不等於去重後獨立場地數；同一公園可能同時出現在收容與防災公園來源。",
+    "收容名冊不表示現場已開設；未確認開設者只提供路線參考，不能配置容量。",
+    "官方無障礙設施欄位不代表已查核入口與全程通行；未知條件不放寬。",
+    "座標可能是建物／校園位置；終點停在附近OSM路網節點，入口與接駁段仍需確認。",
+    "防空設施獨立圖層，不作為震災導航目的地。"
+  ]
+}

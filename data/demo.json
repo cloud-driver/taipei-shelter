@@ -1,0 +1,844 @@
+{
+  "nodes": [
+    {
+      "id": "n00",
+      "name": "演練街口 1-1",
+      "lat": 25.02,
+      "lon": 121.532
+    },
+    {
+      "id": "n01",
+      "name": "演練街口 1-2",
+      "lat": 25.02,
+      "lon": 121.53439999999999
+    },
+    {
+      "id": "n02",
+      "name": "演練街口 1-3",
+      "lat": 25.02,
+      "lon": 121.5368
+    },
+    {
+      "id": "n03",
+      "name": "演練街口 1-4",
+      "lat": 25.02,
+      "lon": 121.5392
+    },
+    {
+      "id": "n04",
+      "name": "演練街口 1-5",
+      "lat": 25.02,
+      "lon": 121.5416
+    },
+    {
+      "id": "n10",
+      "name": "演練街口 2-1",
+      "lat": 25.022,
+      "lon": 121.532
+    },
+    {
+      "id": "n11",
+      "name": "演練街口 2-2",
+      "lat": 25.022,
+      "lon": 121.53439999999999
+    },
+    {
+      "id": "n12",
+      "name": "演練街口 2-3",
+      "lat": 25.022,
+      "lon": 121.5368
+    },
+    {
+      "id": "n13",
+      "name": "演練街口 2-4",
+      "lat": 25.022,
+      "lon": 121.5392
+    },
+    {
+      "id": "n14",
+      "name": "演練街口 2-5",
+      "lat": 25.022,
+      "lon": 121.5416
+    },
+    {
+      "id": "n20",
+      "name": "演練街口 3-1",
+      "lat": 25.024,
+      "lon": 121.532
+    },
+    {
+      "id": "n21",
+      "name": "演練街口 3-2",
+      "lat": 25.024,
+      "lon": 121.53439999999999
+    },
+    {
+      "id": "n22",
+      "name": "演練街口 3-3",
+      "lat": 25.024,
+      "lon": 121.5368
+    },
+    {
+      "id": "n23",
+      "name": "演練街口 3-4",
+      "lat": 25.024,
+      "lon": 121.5392
+    },
+    {
+      "id": "n24",
+      "name": "演練街口 3-5",
+      "lat": 25.024,
+      "lon": 121.5416
+    },
+    {
+      "id": "n30",
+      "name": "演練街口 4-1",
+      "lat": 25.026,
+      "lon": 121.532
+    },
+    {
+      "id": "n31",
+      "name": "演練街口 4-2",
+      "lat": 25.026,
+      "lon": 121.53439999999999
+    },
+    {
+      "id": "n32",
+      "name": "演練街口 4-3",
+      "lat": 25.026,
+      "lon": 121.5368
+    },
+    {
+      "id": "n33",
+      "name": "演練街口 4-4",
+      "lat": 25.026,
+      "lon": 121.5392
+    },
+    {
+      "id": "n34",
+      "name": "演練街口 4-5",
+      "lat": 25.026,
+      "lon": 121.5416
+    },
+    {
+      "id": "n40",
+      "name": "演練街口 5-1",
+      "lat": 25.028,
+      "lon": 121.532
+    },
+    {
+      "id": "n41",
+      "name": "演練街口 5-2",
+      "lat": 25.028,
+      "lon": 121.53439999999999
+    },
+    {
+      "id": "n42",
+      "name": "演練街口 5-3",
+      "lat": 25.028,
+      "lon": 121.5368
+    },
+    {
+      "id": "n43",
+      "name": "演練街口 5-4",
+      "lat": 25.028,
+      "lon": 121.5392
+    },
+    {
+      "id": "n44",
+      "name": "演練街口 5-5",
+      "lat": 25.028,
+      "lon": 121.5416
+    }
+  ],
+  "edges": [
+    {
+      "id": "e-n00-n01",
+      "a": "n00",
+      "b": "n01",
+      "length": 241.83,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.02
+    },
+    {
+      "id": "e-n00-n10",
+      "a": "n00",
+      "b": "n10",
+      "length": 222.39,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.02
+    },
+    {
+      "id": "e-n01-n02",
+      "a": "n01",
+      "b": "n02",
+      "length": 241.83,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.02
+    },
+    {
+      "id": "e-n01-n11",
+      "a": "n01",
+      "b": "n11",
+      "length": 222.39,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.02
+    },
+    {
+      "id": "e-n02-n03",
+      "a": "n02",
+      "b": "n03",
+      "length": 241.83,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.02
+    },
+    {
+      "id": "e-n02-n12",
+      "a": "n02",
+      "b": "n12",
+      "length": 222.39,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.02
+    },
+    {
+      "id": "e-n03-n04",
+      "a": "n03",
+      "b": "n04",
+      "length": 241.83,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": null,
+      "risk": 0.02
+    },
+    {
+      "id": "e-n03-n13",
+      "a": "n03",
+      "b": "n13",
+      "length": 222.39,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.02
+    },
+    {
+      "id": "e-n04-n14",
+      "a": "n04",
+      "b": "n14",
+      "length": 222.39,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.02
+    },
+    {
+      "id": "e-n10-n11",
+      "a": "n10",
+      "b": "n11",
+      "length": 241.82,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.02
+    },
+    {
+      "id": "e-n10-n20",
+      "a": "n10",
+      "b": "n20",
+      "length": 222.39,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.02
+    },
+    {
+      "id": "e-n11-n12",
+      "a": "n11",
+      "b": "n12",
+      "length": 241.82,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.02
+    },
+    {
+      "id": "e-n11-n21",
+      "a": "n11",
+      "b": "n21",
+      "length": 222.39,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.02
+    },
+    {
+      "id": "e-n12-n13",
+      "a": "n12",
+      "b": "n13",
+      "length": 241.82,
+      "stairs": false,
+      "slope": null,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.02
+    },
+    {
+      "id": "e-n12-n22",
+      "a": "n12",
+      "b": "n22",
+      "length": 222.39,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.02
+    },
+    {
+      "id": "e-n13-n14",
+      "a": "n13",
+      "b": "n14",
+      "length": 241.82,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.02
+    },
+    {
+      "id": "e-n13-n23",
+      "a": "n13",
+      "b": "n23",
+      "length": 222.39,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.02
+    },
+    {
+      "id": "e-n14-n24",
+      "a": "n14",
+      "b": "n24",
+      "length": 222.39,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.02
+    },
+    {
+      "id": "e-n20-n21",
+      "a": "n20",
+      "b": "n21",
+      "length": 241.82,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.12
+    },
+    {
+      "id": "e-n20-n30",
+      "a": "n20",
+      "b": "n30",
+      "length": 222.39,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.12
+    },
+    {
+      "id": "e-n21-n22",
+      "a": "n21",
+      "b": "n22",
+      "length": 241.82,
+      "stairs": true,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.12
+    },
+    {
+      "id": "e-n21-n31",
+      "a": "n21",
+      "b": "n31",
+      "length": 222.39,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.12
+    },
+    {
+      "id": "e-n22-n23",
+      "a": "n22",
+      "b": "n23",
+      "length": 241.82,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.12
+    },
+    {
+      "id": "e-n22-n32",
+      "a": "n22",
+      "b": "n32",
+      "length": 222.39,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.12
+    },
+    {
+      "id": "e-n23-n24",
+      "a": "n23",
+      "b": "n24",
+      "length": 241.82,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.12
+    },
+    {
+      "id": "e-n23-n33",
+      "a": "n23",
+      "b": "n33",
+      "length": 222.39,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.12
+    },
+    {
+      "id": "e-n24-n34",
+      "a": "n24",
+      "b": "n34",
+      "length": 222.39,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.12
+    },
+    {
+      "id": "e-n30-n31",
+      "a": "n30",
+      "b": "n31",
+      "length": 241.81,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.02
+    },
+    {
+      "id": "e-n30-n40",
+      "a": "n30",
+      "b": "n40",
+      "length": 222.39,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.02
+    },
+    {
+      "id": "e-n31-n32",
+      "a": "n31",
+      "b": "n32",
+      "length": 241.81,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.02
+    },
+    {
+      "id": "e-n31-n41",
+      "a": "n31",
+      "b": "n41",
+      "length": 222.39,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.02
+    },
+    {
+      "id": "e-n32-n33",
+      "a": "n32",
+      "b": "n33",
+      "length": 241.81,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 0.7,
+      "surface_ok": true,
+      "risk": 0.02
+    },
+    {
+      "id": "e-n32-n42",
+      "a": "n32",
+      "b": "n42",
+      "length": 222.39,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.02
+    },
+    {
+      "id": "e-n33-n34",
+      "a": "n33",
+      "b": "n34",
+      "length": 241.81,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.02
+    },
+    {
+      "id": "e-n33-n43",
+      "a": "n33",
+      "b": "n43",
+      "length": 222.39,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.02
+    },
+    {
+      "id": "e-n34-n44",
+      "a": "n34",
+      "b": "n44",
+      "length": 222.39,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.02
+    },
+    {
+      "id": "e-n40-n41",
+      "a": "n40",
+      "b": "n41",
+      "length": 241.81,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.02
+    },
+    {
+      "id": "e-n41-n42",
+      "a": "n41",
+      "b": "n42",
+      "length": 241.81,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.02
+    },
+    {
+      "id": "e-n42-n43",
+      "a": "n42",
+      "b": "n43",
+      "length": 241.81,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.02
+    },
+    {
+      "id": "e-n43-n44",
+      "a": "n43",
+      "b": "n44",
+      "length": 241.81,
+      "stairs": false,
+      "slope": 3.0,
+      "width": 1.5,
+      "surface_ok": true,
+      "risk": 0.02
+    }
+  ],
+  "shelters": [
+    {
+      "id": "sA",
+      "name": "演練場所 A・西側廣場",
+      "node_id": "n10",
+      "capacity": 28,
+      "accessible_capacity": 6,
+      "status": "open",
+      "entrance_step_free": true,
+      "accessible_toilet": true,
+      "space_accessible": true,
+      "disaster": "earthquake",
+      "background": 0,
+      "background_accessible": 0,
+      "source": "程式產生的演練資料；非官方場所、道路或人口資料",
+      "version": "synthetic-daan-v1"
+    },
+    {
+      "id": "sB",
+      "name": "演練場所 B・中央活動中心",
+      "node_id": "n23",
+      "capacity": 36,
+      "accessible_capacity": 8,
+      "status": "open",
+      "entrance_step_free": true,
+      "accessible_toilet": true,
+      "space_accessible": true,
+      "disaster": "earthquake",
+      "background": 0,
+      "background_accessible": 0,
+      "source": "程式產生的演練資料；非官方場所、道路或人口資料",
+      "version": "synthetic-daan-v1"
+    },
+    {
+      "id": "sC",
+      "name": "演練場所 C・東北運動場",
+      "node_id": "n44",
+      "capacity": 42,
+      "accessible_capacity": 4,
+      "status": "open",
+      "entrance_step_free": true,
+      "accessible_toilet": false,
+      "space_accessible": true,
+      "disaster": "earthquake",
+      "background": 0,
+      "background_accessible": 0,
+      "source": "程式產生的演練資料；非官方場所、道路或人口資料",
+      "version": "synthetic-daan-v1"
+    },
+    {
+      "id": "sD",
+      "name": "演練場所 D・待查核入口",
+      "node_id": "n04",
+      "capacity": null,
+      "accessible_capacity": null,
+      "status": "unknown",
+      "entrance_step_free": null,
+      "accessible_toilet": null,
+      "space_accessible": null,
+      "disaster": "earthquake",
+      "background": 0,
+      "background_accessible": 0,
+      "source": "程式產生的演練資料；非官方場所、道路或人口資料",
+      "version": "synthetic-daan-v1"
+    },
+    {
+      "id": "sE",
+      "name": "演練場所 E・關閉測試",
+      "node_id": "n40",
+      "capacity": 20,
+      "accessible_capacity": 3,
+      "status": "closed",
+      "entrance_step_free": true,
+      "accessible_toilet": true,
+      "space_accessible": true,
+      "disaster": "earthquake",
+      "background": 0,
+      "background_accessible": 0,
+      "source": "程式產生的演練資料；非官方場所、道路或人口資料",
+      "version": "synthetic-daan-v1"
+    },
+    {
+      "id": "sF",
+      "name": "演練防空地下室・不列入震災",
+      "node_id": "n22",
+      "capacity": 50,
+      "accessible_capacity": null,
+      "status": "open",
+      "entrance_step_free": false,
+      "accessible_toilet": false,
+      "space_accessible": false,
+      "disaster": "airraid",
+      "background": 0,
+      "background_accessible": 0,
+      "source": "程式產生的演練資料；非官方場所、道路或人口資料",
+      "version": "synthetic-daan-v1"
+    }
+  ],
+  "areas": [
+    {
+      "id": "demo-0-0",
+      "name": "示意需求區 1-1",
+      "node_id": "n00",
+      "population": 120,
+      "elderly": 25,
+      "area_km2": 0.25,
+      "bounds": [
+        121.531,
+        25.019,
+        121.5358,
+        25.023
+      ],
+      "stat_period": "synthetic",
+      "boundary_version": "synthetic-daan-v1"
+    },
+    {
+      "id": "demo-0-1",
+      "name": "示意需求區 1-2",
+      "node_id": "n02",
+      "population": 143,
+      "elderly": 28,
+      "area_km2": 0.25,
+      "bounds": [
+        121.53580000000001,
+        25.019,
+        121.5406,
+        25.023
+      ],
+      "stat_period": "synthetic",
+      "boundary_version": "synthetic-daan-v1"
+    },
+    {
+      "id": "demo-0-2",
+      "name": "示意需求區 1-3",
+      "node_id": "n04",
+      "population": 166,
+      "elderly": 31,
+      "area_km2": 0.25,
+      "bounds": [
+        121.54060000000001,
+        25.019,
+        121.5454,
+        25.023
+      ],
+      "stat_period": "synthetic",
+      "boundary_version": "synthetic-daan-v1"
+    },
+    {
+      "id": "demo-1-0",
+      "name": "示意需求區 2-1",
+      "node_id": "n20",
+      "population": 189,
+      "elderly": 34,
+      "area_km2": 0.25,
+      "bounds": [
+        121.531,
+        25.023,
+        121.5358,
+        25.027
+      ],
+      "stat_period": "synthetic",
+      "boundary_version": "synthetic-daan-v1"
+    },
+    {
+      "id": "demo-1-1",
+      "name": "示意需求區 2-2",
+      "node_id": "n22",
+      "population": 212,
+      "elderly": 37,
+      "area_km2": 0.25,
+      "bounds": [
+        121.53580000000001,
+        25.023,
+        121.5406,
+        25.027
+      ],
+      "stat_period": "synthetic",
+      "boundary_version": "synthetic-daan-v1"
+    },
+    {
+      "id": "demo-1-2",
+      "name": "示意需求區 2-3",
+      "node_id": "n24",
+      "population": 235,
+      "elderly": 40,
+      "area_km2": 0.25,
+      "bounds": [
+        121.54060000000001,
+        25.023,
+        121.5454,
+        25.027
+      ],
+      "stat_period": "synthetic",
+      "boundary_version": "synthetic-daan-v1"
+    },
+    {
+      "id": "demo-2-0",
+      "name": "示意需求區 3-1",
+      "node_id": "n40",
+      "population": 258,
+      "elderly": 43,
+      "area_km2": 0.25,
+      "bounds": [
+        121.531,
+        25.026999999999997,
+        121.5358,
+        25.031
+      ],
+      "stat_period": "synthetic",
+      "boundary_version": "synthetic-daan-v1"
+    },
+    {
+      "id": "demo-2-1",
+      "name": "示意需求區 3-2",
+      "node_id": "n42",
+      "population": 281,
+      "elderly": 46,
+      "area_km2": 0.25,
+      "bounds": [
+        121.53580000000001,
+        25.026999999999997,
+        121.5406,
+        25.031
+      ],
+      "stat_period": "synthetic",
+      "boundary_version": "synthetic-daan-v1"
+    },
+    {
+      "id": "demo-2-2",
+      "name": "示意需求區 3-3",
+      "node_id": "n44",
+      "population": 304,
+      "elderly": 49,
+      "area_km2": 0.25,
+      "bounds": [
+        121.54060000000001,
+        25.026999999999997,
+        121.5454,
+        25.031
+      ],
+      "stat_period": "synthetic",
+      "boundary_version": "synthetic-daan-v1"
+    }
+  ],
+  "version": "synthetic-daan-v1",
+  "source": "程式產生的演練資料；非官方場所、道路或人口資料",
+  "drill": true,
+  "crs": "EPSG:4326"
+}

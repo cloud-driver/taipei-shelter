@@ -1,0 +1,208 @@
+<section id="page-public">
+  <div class="pagehead">
+    <div>
+      <div class="eyebrow">TAIPEI OPEN DATA × OPENSTREETMAP</div>
+      <h1>臺北市避難場所與步行路線</h1>
+      <p class="muted">以官方名冊查詢場域，沿 OSM 實際道路計算路線。</p>
+    </div>
+    <a class="btn" href="/api/public/download.csv" download>↓ 下載完整名冊 CSV</a>
+  </div>
+  <div class="warning">
+    名冊不代表現場已開設。此頁提供路線參考，沒有即時空位或容量配置；入口、震後道路與全程無障礙仍需查核。防空地下室不列入震災導航。
+  </div>
+  <div id="public-data-message" aria-live="polite"></div>
+  <div id="public-metrics" class="metrics result"></div>
+  <div class="public-workspace">
+    <div>
+      <div class="panel">
+        <div class="panelhead">
+          <div>
+            <h2>OpenStreetMap 公開資料地圖</h2>
+            <small id="public-map-count">讀取名冊中</small>
+          </div>
+          <button class="btn small" id="public-fit">臺北市範圍</button>
+        </div>
+        <div
+          id="public-map"
+          class="public-leaflet"
+          aria-label="臺北市避難場所與 OpenStreetMap 地圖"
+        ></div>
+        <div class="legend">
+          <span><i></i>震災適用</span><span><i class="backup"></i>震災備用</span
+          ><span><i class="park"></i>防災公園</span><span><i class="airraid"></i>防空設施</span
+          ><span><i class="blue"></i>本次起點</span
+          ><label><input type="checkbox" id="public-tiles" checked />顯示線上 OSM 圖磚</label>
+        </div>
+        <div class="panelbody hint">
+          點選地圖空白處設定戶外起點；點選場所查看來源。圖磚按目前畫面載入，不提供公共圖磚離線批次下載。
+        </div>
+        <div class="panelbody accessibility-tools">
+          <label class="check"
+            ><input type="checkbox" id="public-accessibility-layer" />顯示 OSM 無障礙標記（Wheelmap
+            相同標籤）</label
+          ><label class="field"
+            >無障礙圖層評級<select id="public-accessibility-rating">
+              <option value="all">全部評級</option>
+              <option value="yes">綠：標記可使用輪椅</option>
+              <option value="limited">橘：部分可使用</option>
+              <option value="no">紅：不可使用</option>
+              <option value="unknown">灰：未知</option>
+            </select></label
+          >
+          <p id="public-accessibility-status" class="hint">
+            標記不代表全程道路與震後現場可通行。此圖層含一般設施，不全是避難場所。
+          </p>
+          <a href="https://wheelmap.org/" target="_blank" rel="noopener"
+            >到 Wheelmap 查核更多資訊 ↗</a
+          >
+        </div>
+        <div id="public-tile-message" aria-live="polite"></div>
+      </div>
+      <div id="public-route-result" aria-live="polite"></div>
+    </div>
+    <aside class="panel">
+      <div class="panelhead">
+        <h2>規劃 OSM 步行路線</h2>
+        <span class="pill">免登入</span>
+      </div>
+      <form id="public-route-form" class="panelbody">
+        <div class="sectiontitle"><span class="step">1</span>確認實際戶外起點</div>
+        <p class="hint">以下為地圖中心範例座標，並非你的定位；請在地圖點選修正或按定位。</p>
+        <div class="formrow">
+          <label class="field"
+            >起點緯度<input
+              id="public-lat"
+              type="number"
+              value="25.0478"
+              min="24.94"
+              max="25.23"
+              step="any"
+              required /></label
+          ><label class="field"
+            >起點經度<input
+              id="public-lon"
+              type="number"
+              value="121.5319"
+              min="121.44"
+              max="121.69"
+              step="any"
+              required
+          /></label>
+        </div>
+        <button class="btn small full" type="button" id="public-locate">定位我的位置</button>
+        <div class="divider"></div>
+        <div class="sectiontitle"><span class="step">2</span>目的地與必要需求</div>
+        <p id="public-destination" class="soft">自動選擇路網可達的最近震災場所</p>
+        <button class="btn small result" type="button" id="public-clear-target" hidden>
+          改為自動選擇</button
+        ><label class="field result"
+          >本次行進模式<select id="public-mode">
+            <option value="walking">一般步行</option>
+            <option value="slow">步行較慢</option>
+            <option value="wheelchair">使用輪椅</option>
+            <option value="aid">使用輔具</option>
+            <option value="assistance">需要他人協助</option>
+          </select></label
+        ><label class="check"
+          ><input id="public-no-stairs" type="checkbox" />必須無階梯及已確認可通行</label
+        ><label class="check"
+          ><input id="public-toilet" type="checkbox" />必須有已確認的無障礙廁所</label
+        ><label class="check"><input id="public-helper" type="checkbox" />需要的協助者已同行</label
+        ><label class="field"
+          >路網步行時間上限（分鐘）<input
+            id="public-max-minutes"
+            type="number"
+            min="1"
+            max="180"
+            value="60"
+            required
+        /></label>
+        <p class="hint">
+          輪椅模式會顯示 OSM／Wheelmap
+          相同標籤的場所資訊。綠色場所評級不等於沿途道路已查核；資料不足時會拒絕推薦。
+        </p>
+        <div class="divider"></div>
+        <div class="sectiontitle"><span class="step">3</span>出發前確認</div>
+        <label class="check"
+          ><input id="public-stopped" type="checkbox" required />我確認搖晃已停止</label
+        ><label class="check"
+          ><input id="public-evacuate" type="checkbox" required />我確認需要撤離或已接獲指示</label
+        ><label class="check"
+          ><input id="public-confirmed" type="checkbox" required />我已確認本次必要行動需求</label
+        ><label class="check"
+          ><input
+            id="public-reference-consent"
+            type="checkbox"
+            required
+          />我了解開設與入口尚未確認，此結果僅是路線參考，沒有配置名額</label
+        ><button class="btn primary full" type="submit" id="public-route-button">
+          計算 OSM 道路路線 →
+        </button>
+        <div id="public-route-message" aria-live="polite"></div>
+      </form>
+    </aside>
+  </div>
+  <div class="public-browser result">
+    <div class="panel">
+      <div class="panelhead">
+        <div>
+          <h2>完整名冊查詢</h2>
+          <small id="public-result-count">讀取中</small>
+        </div>
+        <button class="btn small" id="public-refresh">↻ 更新</button>
+      </div>
+      <div class="panelbody public-filters">
+        <label class="field"
+          >場域類型<select id="public-kind">
+            <option value="earthquake">震災適用／備用與防災公園</option>
+            <option value="shelter">全部官方收容名冊</option>
+            <option value="park">防災公園</option>
+            <option value="airraid">防空設施（不作地震導航）</option>
+            <option value="all">全部來源</option>
+          </select></label
+        ><label class="field"
+          >行政區<select id="public-district">
+            <option value="">臺北市全部行政區</option>
+          </select></label
+        ><label class="field"
+          >場所輪椅評級（OSM）<select id="public-wheelchair-filter">
+            <option value="all">全部，包含未知</option>
+            <option value="yes">標記可使用輪椅</option>
+            <option value="limited">部分可使用</option>
+            <option value="no">不可使用</option>
+            <option value="unknown">未有可靠評級</option>
+          </select></label
+        ><label class="field"
+          >搜尋名稱、地址或編號<input
+            id="public-search"
+            type="search"
+            placeholder="例如：大安、國小、SA106"
+            maxlength="120"
+        /></label>
+      </div>
+      <div id="public-list" class="public-list"></div>
+      <div class="panelhead">
+        <button class="btn small" id="public-prev" disabled>上一頁</button
+        ><small id="public-page-label">—</small
+        ><button class="btn small" id="public-next" disabled>下一頁</button>
+      </div>
+    </div>
+    <div>
+      <div class="panel">
+        <div class="panelhead"><h2>場所資訊與位置來源</h2></div>
+        <div class="panelbody" id="public-selected">
+          <p class="hint">點選地圖或清單中的場所，可查看來源、名冊容量與位置品質。</p>
+        </div>
+      </div>
+      <details class="panel result">
+        <summary class="panelhead">資料來源與公開授權</summary>
+        <div class="panelbody" id="public-sources"></div>
+      </details>
+      <details class="panel result">
+        <summary class="panelhead">資料品質與查核界線</summary>
+        <div class="panelbody" id="public-quality"></div>
+      </details>
+    </div>
+  </div>
+  <p class="hint result" id="public-updated">等待官方資料快照</p>
+</section>

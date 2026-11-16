@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>安行・API 測試網頁</title>
+    <link rel="icon" href="/static/icon.svg" />
+    <link rel="stylesheet" href="/static/style.css" />
+    <script src="/static/test.js" defer></script>
+  </head>
+  <body>
+    <header class="top">
+      <a class="brand" href="/">安行 ANXING / 系統測試</a>
+      <div class="top-links"><a href="/">返回導航 ↗</a><a href="/docs">API 文件 ↗</a></div>
+    </header>
+    <main class="standalone">
+      <div class="pagehead">
+        <div>
+          <div class="eyebrow">INTEGRATION CHECKS</div>
+          <h1>讓每個流程，都有驗證。</h1>
+          <p class="muted">使用真實 HTTP API 檢查目前後端；結果與失敗原因逐項列出。</p>
+        </div>
+        <span class="pill gray" id="test-summary">尚未執行</span>
+      </div>
+      <div class="warning">
+        此測試會建立獨立的臨時訪客與一人演練配置，完成後取消並登出，不使用你的登入狀態。若容量已滿或場所被管理者封閉，會如實顯示測試失敗。完整競態、隱私與失敗情境請執行隨附
+        pytest。
+      </div>
+      <div class="actions">
+        <button class="btn primary" id="run-tests">執行 API 整合測試 →</button
+        ><a class="btn" href="/openapi.json" target="_blank" rel="noopener">查看 API 規格</a>
+      </div>
+      <div class="panel result">
+        <div class="panelhead">
+          <h2>檢查結果</h2>
+          <small id="test-duration">—</small>
+        </div>
+        <div id="test-results" aria-live="polite">
+          <div class="panelbody hint">按上方按鈕開始測試。</div>
+        </div>
+      </div>
+      <div class="panel result">
+        <div class="panelhead"><h2>測試邊界</h2></div>
+        <div class="panelbody hint">
+          通過代表此刻列出的測試符合預期，不代表已驗證真實地震、現場道路、官方速報、救援派遣或
+          iPhone 推播。請參閱專案內 TEST_REPORT.md 的實際驗證紀錄。
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

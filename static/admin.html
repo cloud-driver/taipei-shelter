@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>安行・演練管理</title>
+    <link rel="icon" href="/static/icon.svg" />
+    <link rel="stylesheet" href="/static/style.css" />
+    <script src="/static/admin.js" defer></script>
+  </head>
+  <body>
+    <header class="top">
+      <a class="brand" href="/">安行 ANXING / 演練管理</a>
+      <div class="top-links"><a href="/">返回導航 ↗</a><a href="/test">系統測試 ↗</a></div>
+    </header>
+    <div class="drill-bar">
+      <span class="pill amber">演練環境</span
+      ><span>變更僅影響此後端的合成演練資料。管理介面不提供個人帳號、起點或需求。</span>
+    </div>
+    <main class="standalone">
+      <div class="pagehead">
+        <div>
+          <div class="eyebrow">OPERATIONS CONSOLE</div>
+          <h1>確認資訊，再調整路網。</h1>
+        </div>
+        <button class="btn" id="admin-refresh">↻ 更新</button>
+      </div>
+      <div class="panel">
+        <div class="panelbody">
+          <form id="admin-auth">
+            <label class="field"
+              >本機管理金鑰<input
+                id="admin-token"
+                type="password"
+                autocomplete="off"
+                placeholder="由 python -m app.cli admin-token 取得"
+                required
+                minlength="24"
+            /></label>
+            <div class="actions">
+              <button class="btn primary" type="submit">連線管理介面</button
+              ><button class="btn" type="button" id="admin-lock">鎖定介面</button>
+            </div>
+            <p class="hint">金鑰僅留在本頁記憶體，重新整理後需再輸入；禁止放在網址或公開版本庫。</p>
+          </form>
+          <div id="admin-message" aria-live="polite"></div>
+        </div>
+      </div>
+      <div id="admin-content" hidden>
+        <div id="admin-metrics" class="metrics result"></div>
+        <div class="panel result">
+          <div class="panelhead">
+            <h2>災情審核與解除</h2>
+            <span class="pill gray">不自動以票數判真</span>
+          </div>
+          <div id="admin-reports"></div>
+        </div>
+        <div class="panel result">
+          <div class="panelhead"><h2>場所狀態與容量</h2></div>
+          <form id="shelter-form" class="panelbody">
+            <div class="formrow">
+              <label class="field">演練場所<select id="admin-shelter"></select></label
+              ><label class="field"
+                >開設狀態<select id="shelter-status">
+                  <option value="open">開設</option>
+                  <option value="closed">關閉</option>
+                  <option value="unknown">未知</option>
+                </select></label
+              >
+            </div>
+            <div class="formrow">
+              <label class="field"
+                >總容量（空白為未知）<input
+                  type="number"
+                  min="0"
+                  max="100000"
+                  id="shelter-capacity" /></label
+              ><label class="field"
+                >無障礙適用容量（空白為未知）<input
+                  type="number"
+                  min="0"
+                  max="100000"
+                  id="shelter-accessible"
+              /></label>
+            </div>
+            <div class="formrow">
+              <label class="field"
+                >非 App 背景人數<input
+                  type="number"
+                  min="0"
+                  max="100000"
+                  id="shelter-background"
+                  required /></label
+              ><label class="field"
+                >其中需無障礙的人數<input
+                  type="number"
+                  min="0"
+                  max="100000"
+                  id="shelter-background-accessible"
+                  required
+              /></label>
+            </div>
+            <div class="formrow">
+              <label class="field"
+                >無階梯入口<select id="shelter-entrance">
+                  <option value="true">已確認可用</option>
+                  <option value="false">不可用</option>
+                  <option value="null">未知</option>
+                </select></label
+              ><label class="field"
+                >無障礙廁所<select id="shelter-toilet">
+                  <option value="true">已確認可用</option>
+                  <option value="false">不可用</option>
+                  <option value="null">未知</option>
+                </select></label
+              >
+            </div>
+            <label class="field"
+              >收容空間可達性<select id="shelter-space">
+                <option value="true">已確認可達</option>
+                <option value="false">不可達</option>
+                <option value="null">未知</option>
+              </select></label
+            ><label class="field"
+              >更新理由<input
+                id="shelter-note"
+                required
+                minlength="3"
+                maxlength="300"
+                placeholder="例如：演練確認入口關閉，請重新規劃。" /></label
+            ><button class="btn primary" type="submit">更新場所並使相關在途配置失效</button>
+            <div id="shelter-message" aria-live="polite"></div>
+          </form>
+        </div>
+        <div class="panel result">
+          <div class="panelhead">
+            <h2>發布演練地震資訊</h2>
+            <span class="pill amber">不會發送官方警報</span>
+          </div>
+          <form id="event-form" class="panelbody">
+            <div class="formrow">
+              <label class="field"
+                >事件識別<input
+                  id="event-id"
+                  value="drill-001"
+                  required
+                  pattern="[a-zA-Z0-9_-]+"
+                  maxlength="80" /></label
+              ><label class="field"
+                >版本（需遞增）<input type="number" id="event-version" min="1" value="1" required
+              /></label>
+            </div>
+            <label class="field"
+              >標題<input
+                id="event-title"
+                value="大安區震後避難演練"
+                required
+                minlength="2"
+                maxlength="120" /></label
+            ><label class="field"
+              >演練規模<input
+                type="number"
+                id="event-magnitude"
+                min="0"
+                max="10"
+                step="0.1"
+                value="6.0"
+                required
+            /></label>
+            <p class="hint">
+              事件時間使用送出當下；來源固定標示本機演練。相同事件的舊版本將被拒絕。
+            </p>
+            <button class="btn primary" type="submit">發布演練資訊</button>
+            <div id="event-message" aria-live="polite"></div>
+          </form>
+        </div>
+      </div>
+      <footer class="footer">
+        管理金鑰不代表現場資料已確認；本原型沒有外部救援或官方預警介接。
+      </footer>
+    </main>
+    <div id="toast" role="status"></div>
+  </body>
+</html>

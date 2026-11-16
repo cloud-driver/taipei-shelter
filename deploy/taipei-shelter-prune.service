@@ -1,0 +1,17 @@
+[Unit]
+Description=Prune Anxing drill private data after retention period
+
+[Service]
+Type=oneshot
+User=anxing
+Group=anxing
+WorkingDirectory=/opt/taipei-shelter
+Environment=PYTHONDONTWRITEBYTECODE=1
+Environment=PYTHONUNBUFFERED=1
+Environment=SHELTER_DATA_DIR=/var/lib/taipei-shelter
+ExecStart=/opt/taipei-shelter/.venv/bin/python -m app.cli prune
+UMask=0077
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/taipei-shelter

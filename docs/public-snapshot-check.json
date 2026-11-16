@@ -1,0 +1,121 @@
+{
+  "status": "PASS",
+  "catalog_count": 22875,
+  "kinds": {
+    "airraid": 22443,
+    "shelter": 419,
+    "park": 13
+  },
+  "unlocated": 81,
+  "accessibility": {
+    "observations": 73,
+    "matched_catalog_records": 13,
+    "ratings": {
+      "yes": 53,
+      "limited": 5,
+      "no": 15
+    },
+    "catalog_ratings": {
+      "unknown": 419,
+      "yes": 10,
+      "limited": 2,
+      "no": 1
+    },
+    "timestamp": "2026-07-15T15:22:01Z",
+    "scope": "路網與學校快照內已存在的具名OSM設施，不是完整Wheelmap資料",
+    "source": "OpenStreetMap contributors；使用Wheelmap相同評級標籤，未使用Wheelmap專屬／合作夥伴資料",
+    "license": "ODbL-1.0",
+    "reference": "https://news.wheelmap.org/en/FAQ/",
+    "wheelmap_url": "https://wheelmap.org/"
+  },
+  "osm_timestamp": "2026-07-15T15:22:01Z",
+  "graph_nodes": 161478,
+  "graph_edges": 221520,
+  "district_routes": [
+    {
+      "district": "中正區",
+      "target": "二二八和平公園",
+      "distance_m": 349.5,
+      "edges": 17,
+      "coordinates": 22
+    },
+    {
+      "district": "大同區",
+      "target": "玉泉公園",
+      "distance_m": 349.0,
+      "edges": 8,
+      "coordinates": 12
+    },
+    {
+      "district": "中山區",
+      "target": "榮星花園公園",
+      "distance_m": 349.2,
+      "edges": 17,
+      "coordinates": 22
+    },
+    {
+      "district": "松山區",
+      "target": "民權公園A",
+      "distance_m": 349.0,
+      "edges": 9,
+      "coordinates": 11
+    },
+    {
+      "district": "大安區",
+      "target": "大安森林公園",
+      "distance_m": 349.9,
+      "edges": 23,
+      "coordinates": 45
+    },
+    {
+      "district": "萬華區",
+      "target": "青年公園",
+      "distance_m": 348.6,
+      "edges": 11,
+      "coordinates": 37
+    },
+    {
+      "district": "信義區",
+      "target": "松德公園",
+      "distance_m": 348.9,
+      "edges": 14,
+      "coordinates": 16
+    },
+    {
+      "district": "士林區",
+      "target": "士林官邸公園",
+      "distance_m": 347.1,
+      "edges": 24,
+      "coordinates": 31
+    },
+    {
+      "district": "北投區",
+      "target": "復興公園",
+      "distance_m": 349.0,
+      "edges": 4,
+      "coordinates": 13
+    },
+    {
+      "district": "內湖區",
+      "target": "大湖公園",
+      "distance_m": 349.7,
+      "edges": 5,
+      "coordinates": 17
+    },
+    {
+      "district": "南港區",
+      "target": "南港公園",
+      "distance_m": 344.3,
+      "edges": 8,
+      "coordinates": 38
+    },
+    {
+      "district": "文山區",
+      "target": "景華公園",
+      "distance_m": 349.9,
+      "edges": 18,
+      "coordinates": 19
+    }
+  ],
+  "elapsed_seconds": 1.672
+}

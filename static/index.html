@@ -1,0 +1,795 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#142f2b" />
+    <meta
+      name="description"
+      content="臺北震後避難分流演練原型，含容量與無障礙篩選、災情審核及可重現實驗。"
+    />
+    <title>安行 ANXING・臺北公開避難場所與OSM導航</title>
+    <link rel="icon" href="/static/icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/static/vendor/leaflet/leaflet.css" />
+    <link rel="stylesheet" href="/static/style.css" />
+    <script src="/static/vendor/leaflet/leaflet.js" defer></script>
+    <script src="/static/app.js" defer></script>
+    <script src="/static/public-map.js" defer></script>
+  </head>
+  <body>
+    <a class="skip" href="#main">跳至主要內容</a>
+    <header class="top">
+      <a class="brand" href="/"
+        ><span class="brand-icon" aria-hidden="true">⌂</span>
+        <div>
+          <strong>安行 <span class="muted">/</span> ANXING</strong
+          ><small>TAIPEI EVACUATION LAB</small>
+        </div></a
+      >
+      <div class="top-links">
+        <span class="live"
+          ><span class="dot" id="connection-dot"></span><span id="connection">連線中</span></span
+        ><a href="/test">系統測試 ↗</a><a href="/admin">管理介面 ↗</a>
+      </div>
+    </header>
+    <div class="drill-bar">
+      <span class="pill amber">公開資料參考</span
+      ><span
+        >官方名冊與 OSM
+        路線不保證現場開設、入口及震後道路可通行。容量演練功能另使用合成資料；本系統不發送官方警報或派遣救援。</span
+      >
+    </div>
+    <div class="shell">
+      <nav class="sidebar" aria-label="主要功能">
+        <button class="navbtn active" data-page="public">
+          <span aria-hidden="true">⌖</span>公開資料導航</button
+        ><button class="navbtn" data-page="navigation">
+          <span aria-hidden="true">↗</span>容量演練</button
+        ><button class="navbtn" data-page="shelters">
+          <span aria-hidden="true">⌂</span>演練場所</button
+        ><button class="navbtn" data-page="analysis">
+          <span aria-hidden="true">▥</span>供需示範</button
+        ><button class="navbtn" data-page="experiments">
+          <span aria-hidden="true">⇄</span>分流實驗</button
+        ><button class="navbtn" data-page="account">
+          <span aria-hidden="true">◎</span>帳號與需求
+        </button>
+        <div class="side-note">
+          地面戶外步行／輪行原型<br />公開名冊 + OSM · v2.0<br /><br />搖晃時：趴下、掩護、穩住。<br />需協助者依自身狀況固定輔具並保護頭頸。<br /><br />現場急難請撥
+          <a href="tel:119">119</a>。
+        </div>
+      </nav>
+      <main id="main">
+        <section id="page-public">
+          <div class="pagehead">
+            <div>
+              <div class="eyebrow">TAIPEI OPEN DATA × OPENSTREETMAP</div>
+              <h1>臺北市避難場所與步行路線</h1>
+              <p class="muted">以官方名冊查詢場域，沿 OSM 實際道路計算路線。</p>
+            </div>
+            <a class="btn" href="/api/public/download.csv" download>↓ 下載完整名冊 CSV</a>
+          </div>
+          <div class="warning">
+            名冊不代表現場已開設。此頁提供路線參考，沒有即時空位或容量配置；入口、震後道路與全程無障礙仍需查核。防空地下室不列入震災導航。
+          </div>
+          <div id="public-data-message" aria-live="polite"></div>
+          <div id="public-metrics" class="metrics result"></div>
+          <div class="public-workspace">
+            <div>
+              <div class="panel">
+                <div class="panelhead">
+                  <div>
+                    <h2>OpenStreetMap 公開資料地圖</h2>
+                    <small id="public-map-count">讀取名冊中</small>
+                  </div>
+                  <button class="btn small" id="public-fit">臺北市範圍</button>
+                </div>
+                <div
+                  id="public-map"
+                  class="public-leaflet"
+                  aria-label="臺北市避難場所與 OpenStreetMap 地圖"
+                ></div>
+                <div class="legend">
+                  <span><i></i>震災適用</span><span><i class="backup"></i>震災備用</span
+                  ><span><i class="park"></i>防災公園</span
+                  ><span><i class="airraid"></i>防空設施</span
+                  ><span><i class="blue"></i>本次起點</span
+                  ><label
+                    ><input type="checkbox" id="public-tiles" checked />顯示線上 OSM 圖磚</label
+                  >
+                </div>
+                <div class="panelbody hint">
+                  點選地圖空白處設定戶外起點；點選場所查看來源。圖磚按目前畫面載入，不提供公共圖磚離線批次下載。
+                </div>
+                <div class="panelbody accessibility-tools">
+                  <label class="check"
+                    ><input type="checkbox" id="public-accessibility-layer" />顯示 OSM
+                    無障礙標記（Wheelmap 相同標籤）</label
+                  ><label class="field"
+                    >無障礙圖層評級<select id="public-accessibility-rating">
+                      <option value="all">全部評級</option>
+                      <option value="yes">綠：標記可使用輪椅</option>
+                      <option value="limited">橘：部分可使用</option>
+                      <option value="no">紅：不可使用</option>
+                      <option value="unknown">灰：未知</option>
+                    </select></label
+                  >
+                  <p id="public-accessibility-status" class="hint">
+                    標記不代表全程道路與震後現場可通行。此圖層含一般設施，不全是避難場所。
+                  </p>
+                  <a href="https://wheelmap.org/" target="_blank" rel="noopener"
+                    >到 Wheelmap 查核更多資訊 ↗</a
+                  >
+                </div>
+                <div id="public-tile-message" aria-live="polite"></div>
+              </div>
+              <div id="public-route-result" aria-live="polite"></div>
+            </div>
+            <aside class="panel">
+              <div class="panelhead">
+                <h2>規劃 OSM 步行路線</h2>
+                <span class="pill">免登入</span>
+              </div>
+              <form id="public-route-form" class="panelbody">
+                <div class="sectiontitle"><span class="step">1</span>確認實際戶外起點</div>
+                <p class="hint">以下為地圖中心範例座標，並非你的定位；請在地圖點選修正或按定位。</p>
+                <div class="formrow">
+                  <label class="field"
+                    >起點緯度<input
+                      id="public-lat"
+                      type="number"
+                      value="25.0478"
+                      min="24.94"
+                      max="25.23"
+                      step="any"
+                      required /></label
+                  ><label class="field"
+                    >起點經度<input
+                      id="public-lon"
+                      type="number"
+                      value="121.5319"
+                      min="121.44"
+                      max="121.69"
+                      step="any"
+                      required
+                  /></label>
+                </div>
+                <button class="btn small full" type="button" id="public-locate">
+                  定位我的位置
+                </button>
+                <div class="divider"></div>
+                <div class="sectiontitle"><span class="step">2</span>目的地與必要需求</div>
+                <p id="public-destination" class="soft">自動選擇路網可達的最近震災場所</p>
+                <button class="btn small result" type="button" id="public-clear-target" hidden>
+                  改為自動選擇</button
+                ><label class="field result"
+                  >本次行進模式<select id="public-mode">
+                    <option value="walking">一般步行</option>
+                    <option value="slow">步行較慢</option>
+                    <option value="wheelchair">使用輪椅</option>
+                    <option value="aid">使用輔具</option>
+                    <option value="assistance">需要他人協助</option>
+                  </select></label
+                ><label class="check"
+                  ><input id="public-no-stairs" type="checkbox" />必須無階梯及已確認可通行</label
+                ><label class="check"
+                  ><input id="public-toilet" type="checkbox" />必須有已確認的無障礙廁所</label
+                ><label class="check"
+                  ><input id="public-helper" type="checkbox" />需要的協助者已同行</label
+                ><label class="field"
+                  >路網步行時間上限（分鐘）<input
+                    id="public-max-minutes"
+                    type="number"
+                    min="1"
+                    max="180"
+                    value="60"
+                    required
+                /></label>
+                <p class="hint">
+                  輪椅模式會顯示 OSM／Wheelmap
+                  相同標籤的場所資訊。綠色場所評級不等於沿途道路已查核；資料不足時會拒絕推薦。
+                </p>
+                <div class="divider"></div>
+                <div class="sectiontitle"><span class="step">3</span>出發前確認</div>
+                <label class="check"
+                  ><input id="public-stopped" type="checkbox" required />我確認搖晃已停止</label
+                ><label class="check"
+                  ><input
+                    id="public-evacuate"
+                    type="checkbox"
+                    required
+                  />我確認需要撤離或已接獲指示</label
+                ><label class="check"
+                  ><input
+                    id="public-confirmed"
+                    type="checkbox"
+                    required
+                  />我已確認本次必要行動需求</label
+                ><label class="check"
+                  ><input
+                    id="public-reference-consent"
+                    type="checkbox"
+                    required
+                  />我了解開設與入口尚未確認，此結果僅是路線參考，沒有配置名額</label
+                ><button class="btn primary full" type="submit" id="public-route-button">
+                  計算 OSM 道路路線 →
+                </button>
+                <div id="public-route-message" aria-live="polite"></div>
+              </form>
+            </aside>
+          </div>
+          <div class="public-browser result">
+            <div class="panel">
+              <div class="panelhead">
+                <div>
+                  <h2>完整名冊查詢</h2>
+                  <small id="public-result-count">讀取中</small>
+                </div>
+                <button class="btn small" id="public-refresh">↻ 更新</button>
+              </div>
+              <div class="panelbody public-filters">
+                <label class="field"
+                  >場域類型<select id="public-kind">
+                    <option value="earthquake">震災適用／備用與防災公園</option>
+                    <option value="shelter">全部官方收容名冊</option>
+                    <option value="park">防災公園</option>
+                    <option value="airraid">防空設施（不作地震導航）</option>
+                    <option value="all">全部來源</option>
+                  </select></label
+                ><label class="field"
+                  >行政區<select id="public-district">
+                    <option value="">臺北市全部行政區</option>
+                  </select></label
+                ><label class="field"
+                  >場所輪椅評級（OSM）<select id="public-wheelchair-filter">
+                    <option value="all">全部，包含未知</option>
+                    <option value="yes">標記可使用輪椅</option>
+                    <option value="limited">部分可使用</option>
+                    <option value="no">不可使用</option>
+                    <option value="unknown">未有可靠評級</option>
+                  </select></label
+                ><label class="field"
+                  >搜尋名稱、地址或編號<input
+                    id="public-search"
+                    type="search"
+                    placeholder="例如：大安、國小、SA106"
+                    maxlength="120"
+                /></label>
+              </div>
+              <div id="public-list" class="public-list"></div>
+              <div class="panelhead">
+                <button class="btn small" id="public-prev" disabled>上一頁</button
+                ><small id="public-page-label">—</small
+                ><button class="btn small" id="public-next" disabled>下一頁</button>
+              </div>
+            </div>
+            <div>
+              <div class="panel">
+                <div class="panelhead"><h2>場所資訊與位置來源</h2></div>
+                <div class="panelbody" id="public-selected">
+                  <p class="hint">點選地圖或清單中的場所，可查看來源、名冊容量與位置品質。</p>
+                </div>
+              </div>
+              <details class="panel result">
+                <summary class="panelhead">資料來源與公開授權</summary>
+                <div class="panelbody" id="public-sources"></div>
+              </details>
+              <details class="panel result">
+                <summary class="panelhead">資料品質與查核界線</summary>
+                <div class="panelbody" id="public-quality"></div>
+              </details>
+            </div>
+          </div>
+          <p class="hint result" id="public-updated">等待官方資料快照</p>
+        </section>
+
+        <section id="page-navigation" hidden>
+          <div class="pagehead">
+            <div>
+              <div class="eyebrow">EVACUATION WORKSPACE</div>
+              <h1>一起，找到可達的去處。</h1>
+              <p class="muted">確認本次需求，讓同行者沿同一條路抵達。</p>
+            </div>
+            <button class="btn" id="save-offline">↓ 預存離線示意圖</button>
+          </div>
+          <div id="network-notice" class="warning" hidden></div>
+          <div id="metrics" class="metrics"></div>
+          <div class="workspace">
+            <div>
+              <div class="panel">
+                <div class="panelhead">
+                  <div>
+                    <h2>大安區・示意路網</h2>
+                    <small>合成街廓與場所入口，非現地地圖</small>
+                  </div>
+                  <span class="pill gray" id="map-version">讀取中</span>
+                </div>
+                <div class="map" id="map" role="img" aria-label="演練路網與避難場所示意圖"></div>
+                <div class="legend">
+                  <span><i></i>演練開設</span><span><i class="closed"></i>關閉／未知</span
+                  ><span><i class="blocked"></i>回報避開</span
+                  ><span><i class="blue"></i>本次起點</span>
+                </div>
+              </div>
+              <div id="route-result" class="result" aria-live="polite"></div>
+              <div class="panel event">
+                <div class="panelhead">
+                  <h2>震後資訊與保護指引</h2>
+                  <span class="pill gray">演練資訊</span>
+                </div>
+                <div class="panelbody">
+                  <div id="event-list" class="hint">
+                    尚無演練事件。官方預警接收及 iPhone 推播未接入。
+                  </div>
+                  <div class="divider"></div>
+                  <p class="hint">
+                    搖晃停止不代表環境已安全。請依現場情況及官方疏散指示判斷；本原型不處理樓內垂直撤離，也不派遣救援。
+                  </p>
+                </div>
+              </div>
+              <div class="panel event">
+                <div class="panelhead">
+                  <h2>災情回報</h2>
+                  <span class="pill gray" id="queue-count">0 筆待上傳</span>
+                </div>
+                <form id="report-form" class="panelbody">
+                  <p class="hint">
+                    指定受影響的整個演練路段或場所；高嚴重度回報先暫時避開，管理端再審核。
+                  </p>
+                  <div class="formrow">
+                    <label class="field">影響對象<select id="report-target"></select></label
+                    ><label class="field"
+                      >災情類型<select id="report-kind">
+                        <option value="blocked">道路阻斷</option>
+                        <option value="debris">落物</option>
+                        <option value="fire">火災</option>
+                        <option value="closure">場所關閉</option>
+                        <option value="crowding">疑似擁擠</option>
+                      </select></label
+                    >
+                  </div>
+                  <label class="field"
+                    >發現時間<input type="datetime-local" id="report-time" required /></label
+                  ><label class="field"
+                    >說明（請勿填個資）<textarea
+                      id="report-description"
+                      required
+                      minlength="3"
+                      maxlength="500"
+                      rows="2"
+                      placeholder="例如：演練障礙物橫跨通道，暫時無法通行。"
+                    ></textarea></label
+                  ><label class="field"
+                    >照片（選填，JPEG／PNG，2MB 內）<input
+                      type="file"
+                      id="report-photo"
+                      accept="image/jpeg,image/png"
+                  /></label>
+                  <p class="hint">
+                    請避開人臉與門牌；上傳後會移除 EXIF／GPS
+                    中繼資料。照片僅本人與管理員可讀取，不公開。
+                  </p>
+                  <label class="check"
+                    ><input
+                      type="checkbox"
+                      id="queue-consent"
+                    />離線時同意將這筆回報暫存於本機，復網後由我按上傳</label
+                  >
+                  <div class="actions">
+                    <button class="btn primary" type="submit">提交演練回報</button
+                    ><button class="btn" id="sync-queue" type="button">上傳離線回報</button
+                    ><button class="btn" id="clear-queue" type="button">清除暫存</button>
+                  </div>
+                  <div id="report-message" aria-live="polite"></div>
+                  <p class="hint">
+                    回報不等於求助送達。現場有立即危險請撥 <a href="tel:119">119</a>。
+                  </p>
+                </form>
+              </div>
+            </div>
+            <aside class="panel">
+              <div class="panelhead">
+                <h2>規劃本次避難</h2>
+                <span class="pill">免登入可用</span>
+              </div>
+              <form id="plan-form" class="panelbody">
+                <div class="sectiontitle"><span class="step">1</span>選擇起點與同行人數</div>
+                <label class="field">演練起點<select id="origin"></select></label>
+                <div class="formrow">
+                  <label class="field"
+                    >同行總人數<input
+                      id="group-size"
+                      type="number"
+                      min="1"
+                      max="30"
+                      value="2"
+                      required /></label
+                  ><label class="field"
+                    >需無障礙人數<input
+                      id="accessible-count"
+                      type="number"
+                      min="0"
+                      max="30"
+                      value="0"
+                      required
+                  /></label>
+                </div>
+                <div class="divider"></div>
+                <div class="sectiontitle"><span class="step">2</span>確認全組行動需求</div>
+                <label class="field"
+                  >行進模式<select id="mode">
+                    <option value="walking">一般步行</option>
+                    <option value="slow">步行較慢</option>
+                    <option value="aid">使用輔具</option>
+                    <option value="wheelchair">使用輪椅</option>
+                    <option value="assistance">需要他人協助</option>
+                    <option value="unsure">不確定（需先確認）</option>
+                  </select></label
+                ><label class="check"
+                  ><input type="checkbox" id="no-stairs" />不能走樓梯／需要無階梯入口</label
+                ><label class="check"><input type="checkbox" id="toilet" />必須有無障礙廁所</label
+                ><label class="check"
+                  ><input type="checkbox" id="helper" />需要的協助者已同行</label
+                >
+                <details>
+                  <summary>步行速度、休息與路段限制</summary>
+                  <div class="formrow">
+                    <label class="field"
+                      >自訂速度 m/s<input
+                        id="speed"
+                        type="number"
+                        min="0.2"
+                        max="2"
+                        step="0.1"
+                        placeholder="採模式預設" /></label
+                    ><label class="field"
+                      >休息分鐘<input id="rest" type="number" min="0" max="30" value="0" step="0.5"
+                    /></label>
+                  </div>
+                  <div class="formrow">
+                    <label class="field"
+                      >最大坡度 %<input
+                        id="slope"
+                        type="number"
+                        min="0"
+                        max="15"
+                        value="8"
+                        step="0.5" /></label
+                    ><label class="field"
+                      >最小路寬 m<input
+                        id="width"
+                        type="number"
+                        min="0.6"
+                        max="2"
+                        step="0.1"
+                        value="0.9"
+                    /></label>
+                  </div>
+                  <label class="field"
+                    >可接受的額外步行分鐘<input id="extra" type="number" min="0" max="30" value="5"
+                  /></label>
+                </details>
+                <p class="hint" id="speed-hint">預設速度 1.2 m/s，僅為時間估算假設。</p>
+                <div class="divider"></div>
+                <div class="sectiontitle"><span class="step">3</span>出發前確認</div>
+                <label class="check"
+                  ><input type="checkbox" id="stopped" required />我已確認搖晃停止</label
+                ><label class="check"
+                  ><input
+                    type="checkbox"
+                    id="evacuate"
+                    required
+                  />我確認需撤離或已接獲疏散指示</label
+                ><label class="check"
+                  ><input
+                    type="checkbox"
+                    id="confirmed"
+                    required
+                  />已確認全組必要需求，同行者不拆分</label
+                ><button type="submit" class="btn primary full" id="plan-button">
+                  尋找可達場所 <span aria-hidden="true">→</span>
+                </button>
+                <p class="hint result">
+                  短期配置只協調演練使用者，不代表保證床位；未知無障礙條件不視為通行。
+                </p>
+                <div id="plan-message" aria-live="polite"></div>
+              </form>
+            </aside>
+          </div>
+        </section>
+        <section id="page-shelters" hidden>
+          <div class="pagehead">
+            <div>
+              <div class="eyebrow">SHELTER DIRECTORY</div>
+              <h1>場所與供給</h1>
+              <p class="muted">開設狀態與容量均為演練設定，沒有真實即時空位。</p>
+            </div>
+            <button class="btn" data-refresh>↻ 更新資料</button>
+          </div>
+          <div class="cards" id="shelter-list"></div>
+        </section>
+        <section id="page-analysis" hidden>
+          <div class="pagehead">
+            <div>
+              <div class="eyebrow">SUPPLY & ACCESSIBILITY</div>
+              <h1>供需與步行可達分析</h1>
+              <p class="muted">九個合成需求區的範例分析。全臺北市正式圖資與人口資料尚未匯入。</p>
+            </div>
+            <button class="btn" id="refresh-analysis">↻ 重算分析</button>
+          </div>
+          <div class="warning">
+            供需表採一般步行 1.2 m/s；可達路網圖採導航頁目前模式。需求＝合成人口 ×
+            30%；多區共同使用同一份容量。依區域代碼與最近可用容量批次分配，順序可能影響結果；高齡比例不代表失能或輪椅需求。
+          </div>
+          <div id="analysis-content"></div>
+        </section>
+        <section id="page-experiments" hidden>
+          <div class="pagehead">
+            <div>
+              <div class="eyebrow">REPRODUCIBLE EXPERIMENTS</div>
+              <h1>比較分流，量測代價。</h1>
+              <p class="muted">相同需求、障礙真值與種子，比較三種策略。</p>
+            </div>
+          </div>
+          <div class="analysis-layout">
+            <div class="panel">
+              <div class="panelhead">
+                <h2>設定演練情境</h2>
+                <span class="pill gray">可重現</span>
+              </div>
+              <form id="experiment-form" class="panelbody">
+                <div class="formrow">
+                  <label class="field"
+                    >隨機種子<input
+                      id="sim-seed"
+                      type="number"
+                      min="0"
+                      max="2147483647"
+                      value="42"
+                      required /></label
+                  ><label class="field"
+                    >種子數量<input
+                      id="sim-repeats"
+                      type="number"
+                      min="1"
+                      max="10"
+                      value="3"
+                      required
+                  /></label>
+                </div>
+                <div class="formrow">
+                  <label class="field"
+                    >基準人口<input
+                      id="sim-population"
+                      type="number"
+                      min="10"
+                      max="2000"
+                      value="300"
+                      required /></label
+                  ><label class="field"
+                    >假設日間倍率<input
+                      id="sim-daytime"
+                      type="number"
+                      min="0.3"
+                      max="3"
+                      step="0.1"
+                      value="1"
+                      required
+                  /></label>
+                </div>
+                <div class="formrow">
+                  <label class="field"
+                    >避難比例 %<input
+                      id="sim-evacuation"
+                      type="number"
+                      min="1"
+                      max="100"
+                      value="30"
+                      required /></label
+                  ><label class="field"
+                    >App 使用率 %<input
+                      id="sim-app"
+                      type="number"
+                      min="0"
+                      max="100"
+                      value="60"
+                      required
+                  /></label>
+                </div>
+                <div class="formrow">
+                  <label class="field"
+                    >建議接受率 %<input
+                      id="sim-acceptance"
+                      type="number"
+                      min="0"
+                      max="100"
+                      value="100"
+                      required /></label
+                  ><label class="field"
+                    >含無障礙成員群組比例 %<input
+                      id="sim-accessibility"
+                      type="number"
+                      min="0"
+                      max="100"
+                      value="10"
+                      required
+                  /></label>
+                </div>
+                <div class="formrow">
+                  <label class="field"
+                    >真實阻斷比例 %<input
+                      id="sim-blocked"
+                      type="number"
+                      min="0"
+                      max="50"
+                      value="8"
+                      required /></label
+                  ><label class="field"
+                    >錯誤回報比例 %<input
+                      id="sim-false"
+                      type="number"
+                      min="0"
+                      max="50"
+                      value="3"
+                      required
+                  /></label>
+                </div>
+                <label class="field"
+                  >最多額外步行分鐘<input
+                    id="sim-extra"
+                    type="number"
+                    min="0"
+                    max="30"
+                    value="5"
+                    required /></label
+                ><button class="btn primary full" type="submit" id="run-experiment">
+                  執行三策略比較 →
+                </button>
+                <div id="experiment-message" aria-live="polite"></div>
+              </form>
+            </div>
+            <div>
+              <div class="panel">
+                <div class="panelhead"><h2>實驗設計</h2></div>
+                <div class="panelbody">
+                  <p class="soft">
+                    <strong>A / 最近場所</strong><br />依可行最短時間，不考慮容量與災情。
+                  </p>
+                  <div class="divider"></div>
+                  <p class="soft">
+                    <strong>B / 容量分流</strong><br />保留無障礙適用容量，同一家庭整組分配。
+                  </p>
+                  <div class="divider"></div>
+                  <p class="soft">
+                    <strong>C / 容量＋災情分流</strong
+                    ><br />加入模擬收到的真／假回報，排除已知阻斷。
+                  </p>
+                  <div class="divider"></div>
+                  <p class="hint">
+                    未使用或未接受建議者仍採
+                    A。危險暴露依獨立模擬真值計算，避免把演算法自己的判斷當作正確答案。只量測分配與路程，不推估排隊延遲。
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="experiment-result" class="result" aria-live="polite"></div>
+        </section>
+        <section id="page-account" hidden>
+          <div class="pagehead">
+            <div>
+              <div class="eyebrow">YOUR NEEDS, YOUR CHOICE</div>
+              <h1>帳號與個人需求</h1>
+              <p class="muted">僅儲存導航所需資料；訪客使用不必填年齡。</p>
+            </div>
+            <span class="pill gray" id="account-status">訪客模式</span>
+          </div>
+          <div class="account-layout">
+            <div class="panel">
+              <div class="panelhead"><h2 id="auth-heading">登入或建立帳號</h2></div>
+              <div class="panelbody">
+                <div class="tabs" id="auth-tabs">
+                  <button class="tab active" data-auth="login">登入</button
+                  ><button class="tab" data-auth="register">建立帳號</button>
+                </div>
+                <form id="auth-form">
+                  <label class="field"
+                    >帳號名稱<input
+                      id="username"
+                      autocomplete="username"
+                      minlength="3"
+                      maxlength="40"
+                      pattern="[a-zA-Z0-9_.-]+"
+                      required
+                      placeholder="英數、底線、句點或減號" /></label
+                  ><label class="field"
+                    >密碼<input
+                      id="password"
+                      type="password"
+                      autocomplete="current-password"
+                      minlength="10"
+                      maxlength="128"
+                      required
+                      placeholder="至少 10 個字元"
+                  /></label>
+                  <div id="register-fields" hidden>
+                    <label class="field"
+                      >實歲（選填）<input
+                        id="age"
+                        type="number"
+                        min="0"
+                        max="120"
+                        placeholder="不需要完整生日" /></label
+                    ><label class="check"
+                      ><input
+                        id="use-needs"
+                        type="checkbox"
+                        checked
+                      />儲存導航頁目前設定的行動需求</label
+                    ><label class="check"
+                      ><input
+                        id="consent"
+                        type="checkbox"
+                      />同意將年齡或行動需求儲存於此後端，供本人導航使用，可隨時修改或刪除</label
+                    >
+                    <p class="hint">
+                      至少提供年齡或行動需求其中一項；不蒐集病名、診斷證明或身障證號。
+                    </p>
+                  </div>
+                  <button class="btn primary full" id="auth-submit" type="submit">登入</button>
+                </form>
+                <div id="logged-in" hidden>
+                  <p id="profile-summary" class="soft"></p>
+                  <label class="field"
+                    >實歲（可修改或清空）<input id="profile-age" type="number" min="0" max="120"
+                  /></label>
+                  <div class="actions">
+                    <button class="btn primary" id="load-profile">載入到本次導航</button
+                    ><button class="btn" id="update-profile">以本次需求更新帳號</button
+                    ><button class="btn" id="save-profile-offline">同意預存需求至本機</button
+                    ><button class="btn" id="logout">登出</button>
+                  </div>
+                  <div class="divider"></div>
+                  <label class="check"
+                    ><input
+                      type="checkbox"
+                      id="delete-consent"
+                    />我確認刪除本帳號與儲存需求（不可復原）</label
+                  ><button class="btn danger" id="delete-account">刪除帳號及需求</button>
+                </div>
+                <div id="auth-message" aria-live="polite"></div>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="panelhead"><h2>每次出發都能調整</h2></div>
+              <div class="panelbody">
+                <p class="hint">
+                  本次導航設定可暫時調整，不會自動寫回帳號。年齡不決定身障標記，也不推定步行速度。修改帳號需求後，既有在途配置失效，必須重新規劃。
+                </p>
+                <div class="divider"></div>
+                <p class="hint">
+                  登入憑證只存在此分頁的
+                  sessionStorage。離線預存資料需另外同意；公用電腦請在使用後清除預存。
+                </p>
+                <div class="actions">
+                  <button class="btn" id="load-offline-profile">載入本機預存需求</button
+                  ><button class="btn" id="clear-offline">清除離線圖與需求</button>
+                </div>
+                <div class="divider"></div>
+                <p class="hint">
+                  密碼經 scrypt
+                  雜湊，個人需求僅本人存取。管理端與實驗結果不提供個人帳號、精確起點或行動狀況。資料保存與部署限制請見隨附說明。
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <footer class="footer">
+          <span>ANXING LAB · 臺北市震後避難分流研究原型</span
+          ><span id="updated-at">等待後端資料</span>
+        </footer>
+      </main>
+    </div>
+    <div id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>

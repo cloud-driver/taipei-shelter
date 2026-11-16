@@ -1,0 +1,19 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# Local runtime data: SQLite database, admin token, backups
+.local/
+*.sqlite*
+.env
+
+# Editors / OS
+.DS_Store
+.idea/
+.vscode/
+node_modules/

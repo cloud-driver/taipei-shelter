@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>安行・API 文件</title>
+    <link rel="icon" href="/static/icon.svg" />
+    <link rel="stylesheet" href="/static/style.css" />
+    <script src="/static/docs.js" defer></script>
+  </head>
+  <body>
+    <header class="top">
+      <a class="brand" href="/">安行 ANXING / API 文件</a>
+      <div class="top-links"><a href="/test">整合測試 ↗</a><a href="/">返回導航 ↗</a></div>
+    </header>
+    <main class="standalone">
+      <div class="pagehead">
+        <div>
+          <div class="eyebrow">DEVELOPER REFERENCE</div>
+          <h1>可檢查，也能直接測試。</h1>
+          <p class="muted">從後端 OpenAPI 即時載入，文件不依賴外部 CDN。</p>
+        </div>
+        <a class="btn" href="/openapi.json">下載 OpenAPI JSON</a>
+      </div>
+      <div class="panel">
+        <div class="panelhead">
+          <h2>API 請求工具</h2>
+          <span class="pill amber">寫入會改變演練資料</span>
+        </div>
+        <form id="api-form" class="panelbody">
+          <label class="field">端點<select id="endpoint"></select></label
+          ><label class="field"
+            >路徑（以實際識別替換大括號）<input id="request-path" required
+          /></label>
+          <div class="formrow">
+            <label class="field"
+              >Bearer token（選填）<input id="bearer" type="password" autocomplete="off" /></label
+            ><label class="field"
+              >管理金鑰（選填）<input id="admin-key" type="password" autocomplete="off"
+            /></label>
+          </div>
+          <label class="field"
+            >JSON 內容<textarea
+              id="json-body"
+              rows="6"
+              spellcheck="false"
+              placeholder="GET 不需要填內容；POST / PUT / PATCH 參考下方欄位規格。"
+            ></textarea>
+          </label>
+          <div class="actions">
+            <button type="submit" class="btn primary">送出請求</button
+            ><button type="button" class="btn" id="docs-guest">建立此頁訪客 token</button
+            ><button type="button" class="btn" id="docs-clear">清除憑證</button>
+          </div>
+          <pre id="api-response" class="code" aria-live="polite">尚未送出請求</pre>
+        </form>
+      </div>
+      <div class="panel result">
+        <div class="panelhead"><h2>端點規格</h2></div>
+        <div id="api-reference" class="panelbody"></div>
+      </div>
+      <div class="panel result">
+        <div class="panelhead"><h2>資料模型</h2></div>
+        <div id="api-schemas" class="panelbody"></div>
+      </div>
+    </main>
+  </body>
+</html>
